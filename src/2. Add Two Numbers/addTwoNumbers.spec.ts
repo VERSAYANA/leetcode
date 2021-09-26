@@ -1,8 +1,26 @@
-import {
-  addTwoNumbers,
-  arrayToLinkedList,
-  linkedListToArray,
-} from "./addTwoNumbers";
+import { addTwoNumbers, ListNode } from "./addTwoNumbers";
+
+const linkedListToArray = (
+  linkedList: ListNode | null | undefined
+): number[] => {
+  const arr: any[] = [];
+  while (true) {
+    arr.push(linkedList?.val);
+    if (linkedList?.next === null) {
+      break;
+    }
+    linkedList = linkedList?.next;
+  }
+  return arr;
+};
+
+const arrayToLinkedList = (arr: number[]): ListNode | null => {
+  let result = null;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    result = new ListNode(arr[i], result);
+  }
+  return result;
+};
 
 type TestValuesType = {
   l1: number[];

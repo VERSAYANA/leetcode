@@ -8,58 +8,32 @@ export class ListNode {
   }
 }
 
+// Time complexity : O(max(m, n))
+// Space complexity : O(max(m, n))
 export function addTwoNumbers(
   l1: ListNode | null,
-  l2: ListNode | null
+  l2: ListNode | null,
+  carry = 0
 ): ListNode | null {
-  const n1 = reversedLinkedListToNumber(l1);
-  const n2 = reversedLinkedListToNumber(l2);
-  const resultNumber = n1 + n2;
-  const result = numberToReversedLinkedList(resultNumber);
+  let result = null;
+
+  if (l1 !== null || l2 !== null) {
+    let sum = (l1?.val || 0) + (l2?.val || 0) + carry;
+
+    if (sum >= 10) {
+      carry = 1;
+      sum = sum - 10;
+    } else {
+      carry = 0;
+    }
+
+    result = new ListNode(
+      sum,
+      addTwoNumbers(l1?.next || null, l2?.next || null, carry)
+    );
+  } else if (carry) {
+    result = new ListNode(carry, null);
+  }
 
   return result;
 }
-
-export const numberToReversedLinkedList = (num: bigint): ListNode | null => {
-  const arr = numberToArray(num).reverse();
-  const linkedList = arrayToLinkedList(arr);
-  return linkedList;
-};
-
-export const reversedLinkedListToNumber = (
-  linkedList: ListNode | null
-): bigint => {
-  const arr = linkedListToArray(linkedList).reverse();
-  const num = arrayToNumber(arr);
-  return num;
-};
-
-export const numberToArray = (num: bigint): number[] => {
-  return Array.from(String(num), Number);
-};
-
-export const arrayToNumber = (arr: number[]): bigint => {
-  return BigInt(arr.join(""));
-};
-
-export const linkedListToArray = (
-  linkedList: ListNode | null | undefined
-): number[] => {
-  const arr: any[] = [];
-  while (true) {
-    arr.push(linkedList?.val);
-    if (linkedList?.next === null) {
-      break;
-    }
-    linkedList = linkedList?.next;
-  }
-  return arr;
-};
-
-export const arrayToLinkedList = (arr: number[]): ListNode | null => {
-  let result = null;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    result = new ListNode(arr[i], result);
-  }
-  return result;
-};
