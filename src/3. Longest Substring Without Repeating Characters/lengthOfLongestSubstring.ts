@@ -2,26 +2,31 @@ export function lengthOfLongestSubstring(s: string): number {
   if (s === "") {
     return 0;
   }
+
   let stringMap: Map<string, number> = new Map();
   stringMap.set(s[0], 0);
   let max = 1;
   let current = 1;
+  let subString = s[0];
+
   for (let i = 1; i < s.length; i++) {
-    let stringLocation = stringMap.get(s[i]);
-    if (stringLocation === undefined) {
-      stringMap.set(s[i], i);
+    const charLocation = stringMap.get(s[i]);
+    const startIndexOfCurrentSubString = stringMap.get(subString[0]);
+    stringMap.set(s[i], i);
+
+    if (
+      charLocation !== undefined &&
+      startIndexOfCurrentSubString !== undefined &&
+      startIndexOfCurrentSubString <= charLocation
+    ) {
+      subString = s.slice(charLocation + 1, i + 1);
+      current = subString.length;
+    } else {
       current = current + 1;
       if (current > max) {
         max = current;
       }
-    } else {
-      current = 1;
-      stringMap = new Map();
-      stringMap.set(s[stringLocation + 1], stringLocation + 1);
-      if (i === s.length - 1) {
-        break;
-      }
-      i = stringLocation + 1;
+      subString = subString.concat(s[i]);
     }
   }
 
