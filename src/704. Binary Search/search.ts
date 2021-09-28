@@ -5,7 +5,6 @@ export function search(nums: number[], target: number): number {
   while (start <= end) {
     const index = Math.floor((end + start) / 2);
     if (nums[index] === target) return index;
-    else if (start === end) return -1;
     else if (nums[index] < target) start = index + 1;
     else end = index;
   }
