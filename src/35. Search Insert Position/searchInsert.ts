@@ -10,7 +10,7 @@ export function searchInsert(nums: number[], target: number): number {
   }
 
   while (start <= end) {
-    const index = Math.floor((end + start) / 2);
+    const index = Math.floor(start + (end - start) / 2);
     if (nums[index] === target) {
       return index;
     } else if (nums[index] < target) {
