@@ -3,10 +3,14 @@ export function search(nums: number[], target: number): number {
   let end = nums.length - 1;
 
   while (start <= end) {
-    const index = Math.floor((end + start) / 2);
-    if (nums[index] === target) return index;
-    else if (nums[index] < target) start = index + 1;
-    else end = index;
+    const index = Math.floor(start + (end - start) / 2);
+    if (nums[index] === target) {
+      return index;
+    } else if (nums[index] < target) {
+      start = index + 1;
+    } else {
+      end = index - 1;
+    }
   }
 
   return -1;
