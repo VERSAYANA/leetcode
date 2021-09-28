@@ -24,6 +24,8 @@ const solution1 = function (isBadVersion: any) {
   };
 };
 
+// Time complexity: O(log n)
+// Space complexity: O(1)
 const solution2 = function (isBadVersion: any) {
   return function (n: number): number {
     let start = 0;
