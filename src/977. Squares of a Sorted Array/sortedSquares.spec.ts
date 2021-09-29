@@ -1,4 +1,4 @@
-import { sortedSquares } from "./sortedSquares";
+import { sortedSquares1, sortedSquares2 } from "./sortedSquares";
 
 type TestValuesType = {
   nums: number[];
@@ -17,10 +17,17 @@ const testValues: TestValuesType[] = [
 ];
 
 for (let i = 0; i < testValues.length; i++) {
-  describe(`Test ${i + 1}`, () => {
+  describe(`Test ${i + 1} for Solution 1`, () => {
     test(`Input: nums: [${testValues[i].nums}]
-    Expected output: ${testValues[i].output}`, () => {
-      expect(sortedSquares(testValues[i].nums)).toEqual(testValues[i].output);
+    Expected output: [${testValues[i].output}]`, () => {
+      expect(sortedSquares1(testValues[i].nums)).toEqual(testValues[i].output);
+    });
+  });
+
+  describe(`Test ${i + 1}  for Solution 2`, () => {
+    test(`Input: nums: [${testValues[i].nums}]
+    Expected output: [${testValues[i].output}]`, () => {
+      expect(sortedSquares2(testValues[i].nums)).toEqual(testValues[i].output);
     });
   });
 }
