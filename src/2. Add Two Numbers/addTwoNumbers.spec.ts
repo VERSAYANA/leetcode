@@ -1,4 +1,6 @@
-import { addTwoNumbers, ListNode } from "./addTwoNumbers";
+import { addTwoNumbers } from "./addTwoNumbers";
+import { ListNode } from "../utils/ListNode";
+import { arrayToLinkedList } from "../utils/arrayToLinkedList";
 
 const linkedListToArray = (
   linkedList: ListNode | null | undefined
@@ -12,14 +14,6 @@ const linkedListToArray = (
     linkedList = linkedList?.next;
   }
   return arr;
-};
-
-const arrayToLinkedList = (arr: number[]): ListNode | null => {
-  let result = null;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    result = new ListNode(arr[i], result);
-  }
-  return result;
 };
 
 type TestValuesType = {
