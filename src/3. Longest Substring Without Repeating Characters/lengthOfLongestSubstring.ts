@@ -1,3 +1,5 @@
+// Time complexity: O(n)
+// Space complexity: O(n)
 export function lengthOfLongestSubstring(s: string): number {
   if (s === "") {
     return 0;
@@ -27,6 +29,28 @@ export function lengthOfLongestSubstring(s: string): number {
         max = current;
       }
       subString = subString.concat(s[i]);
+    }
+  }
+
+  return max;
+}
+
+// Time complexity: O(n)
+// Space complexity: O(n)
+export function lengthOfLongestSubstring2(s: string): number {
+  let left = 0;
+  let right = 0;
+  let max = 0;
+  const stringSet: Set<string> = new Set();
+
+  while (right < s.length) {
+    if (!stringSet.has(s[right])) {
+      stringSet.add(s[right]);
+      right += 1;
+      max = Math.max(max, stringSet.size);
+    } else {
+      stringSet.delete(s[left]);
+      left += 1;
     }
   }
 
