@@ -1,9 +1,8 @@
 export function checkInclusion(s1: string, s2: string): boolean {
   const s1Map = stringToCharFrequencyMap(s1);
-  const firstWindowMap = stringToCharFrequencyMap(s2.slice(0, s1.length));
-  let windowMap = new Map(firstWindowMap);
+  let windowMap = stringToCharFrequencyMap(s2.slice(0, s1.length));
 
-  if (areMapsEqual(s1Map, firstWindowMap)) {
+  if (areMapsEqual(s1Map, windowMap)) {
     return true;
   }
 
@@ -39,11 +38,10 @@ export const stringToCharFrequencyMap = (str: string): Map<string, number> => {
 };
 
 export const newWindowMap = (
-  oldWindowMap: Map<string, number>,
+  windowMap: Map<string, number>,
   oldChar: string,
   newChar: string
 ): Map<string, number> => {
-  const windowMap = new Map(oldWindowMap);
   const oldCharFrequency = windowMap.get(oldChar);
 
   if (oldCharFrequency && oldCharFrequency > 1) {
