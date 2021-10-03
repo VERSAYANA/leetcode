@@ -1,41 +1,63 @@
 export function checkInclusion(s1: string, s2: string): boolean {
-  const s1Map: Map<string, number> = new Map();
+  const s1Map = stringToCharFrequencyMap(s1);
+  const firstWindowMap = stringToCharFrequencyMap(s2.slice(0, s1.length));
+  let windowMap = new Map(firstWindowMap);
 
-  for (let i = 0; i < s1.length; i++) {
-    let current = s1Map.get(s1[i]);
-    if (current === undefined) {
-      s1Map.set(s1[i], 1);
-    } else {
-      s1Map.set(s1[i], current + 1);
-    }
+  if (areMapsEqual(s1Map, firstWindowMap)) {
+    return true;
   }
 
-  const isPermutation = (strMap: Map<string, number>, str: string): boolean => {
-    for (let i = 0; i < str.length; i++) {
-      let current = strMap.get(str[i]);
-      if (current === undefined) {
-        return false;
-      } else {
-        if (current === 1) {
-          strMap.delete(str[i]);
-        } else {
-          strMap.set(str[i], current - 1);
-        }
-      }
-    }
-    return true;
-  };
-
-  for (
-    let left = 0, right = s1.length - 1;
-    right < s2.length;
-    right++, left++
-  ) {
-    const subString = s2.slice(left, right + 1);
-    if (isPermutation(new Map(s1Map), subString)) {
+  for (let left = 1, right = s1.length; right < s2.length; left++, right++) {
+    windowMap = newWindowMap(windowMap, s2[left - 1], s2[right]);
+    if (areMapsEqual(s1Map, windowMap)) {
       return true;
     }
   }
-
   return false;
 }
+
+export const areMapsEqual = (
+  map1: Map<string, number>,
+  map2: Map<string, number>
+): boolean => {
+  for (const [key, value] of map1) {
+    if (map2.get(key) !== value) {
+      return false;
+    }
+  }
+  return true;
+};
+
+export const stringToCharFrequencyMap = (str: string): Map<string, number> => {
+  const map: Map<string, number> = new Map();
+  for (let c of str) {
+    const charFrequency = map.get(c) || 0;
+    map.set(c, charFrequency + 1);
+  }
+
+  return map;
+};
+
+export const newWindowMap = (
+  oldWindowMap: Map<string, number>,
+  oldChar: string,
+  newChar: string
+): Map<string, number> => {
+  const windowMap = new Map(oldWindowMap);
+  const oldCharFrequency = windowMap.get(oldChar);
+
+  if (oldCharFrequency && oldCharFrequency > 1) {
+    windowMap.set(oldChar, oldCharFrequency - 1);
+  } else {
+    windowMap.delete(oldChar);
+  }
+
+  const newCharFrequency = windowMap.get(newChar);
+  if (newCharFrequency === undefined) {
+    windowMap.set(newChar, 1);
+  } else {
+    windowMap.set(newChar, newCharFrequency + 1);
+  }
+
+  return windowMap;
+};
