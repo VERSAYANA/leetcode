@@ -44,3 +44,28 @@ const connectNext = (node: Node | null, next: Node | null) => {
     node.next = next;
   }
 };
+
+export function connect2(root: Node | null): Node | null {
+  if (root) {
+    root.next = null;
+    connectNext(root.left || null, root.right || null);
+    connectNext(root.right || null, null);
+  }
+
+  const recursiveConnect = (node: Node | null, left: Node | null) => {
+    connectNext(node?.left || null, node?.right || null);
+    connectNext(node?.right || null, node?.next?.left || null);
+
+    if (node?.next) {
+      recursiveConnect(node.next, left);
+    } else if (left) {
+      recursiveConnect(left, left.left);
+    } else {
+      return;
+    }
+  };
+
+  recursiveConnect(root?.left || null, root?.left?.left || null);
+
+  return root;
+}
