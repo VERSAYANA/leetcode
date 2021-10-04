@@ -1,3 +1,5 @@
+// Time complexity: O(n)
+// Space complexity: O(n)
 export function floodFill(
   image: number[][],
   sr: number,
