@@ -28,12 +28,7 @@ function mergeTrees(
     mergedNode: TreeNode | null
   ) => {
     if (mergedNode !== null) {
-      const node1Left = node1?.left?.val === 0 ? 0 : node1?.left?.val || null;
-      const node2Left = node2?.left?.val === 0 ? 0 : node2?.left?.val || null;
-
-      if (node1Left === null && node2Left === null) {
-        mergedNode.left = null;
-      } else {
+      if (node1?.left?.val != null || node2?.left?.val != null) {
         mergedNode.left = new TreeNode(
           (node1?.left?.val || 0) + (node2?.left?.val || 0)
         );
@@ -41,14 +36,7 @@ function mergeTrees(
 
       recursiveMerge(node1?.left || null, node2?.left || null, mergedNode.left);
 
-      const node1Right =
-        node1?.right?.val === 0 ? 0 : node1?.right?.val || null;
-      const node2Right =
-        node2?.right?.val === 0 ? 0 : node2?.right?.val || null;
-
-      if (node1Right === null && node2Right === null) {
-        mergedNode.right = null;
-      } else {
+      if (node1?.right?.val != null || node2?.right?.val != null) {
         mergedNode.right = new TreeNode(
           (node1?.right?.val || 0) + (node2?.right?.val || 0)
         );
